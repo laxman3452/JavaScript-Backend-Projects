@@ -7,7 +7,7 @@ PORT  = 4000
 
 const dotenv = require('dotenv');
 dotenv.config();
-process.env-PORT
+process.env.PORT
 
 
 npm i nodemon
