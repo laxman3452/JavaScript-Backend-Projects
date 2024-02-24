@@ -16,4 +16,6 @@ npm i nodemon
     "start": "nodemon ./bin/www"
 
   },
-mongodb Altas ma account banaune, network access, database access, db/index ma gayera db connect garne ani export connectDB garne ani app.js ma gayera import connect db garne ani teslai execute garne like connectDB();
+Create Account in mongoDb Atlas, 
+network access, 
+database access,
