@@ -19,3 +19,57 @@ npm i nodemon
 Create Account in mongoDb Atlas, 
 network access, 
 database access,
+
+
+Simple OverView on Workking with multer for multiple and single file upload
+// Import necessary modules
+import express from 'express';
+import multer from 'multer';
+import path from 'path';
+
+const router = express.Router();
+
+// Set up storage for multer
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/temp");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+
+// Set up multer for file upload
+export const upload = multer({
+  storage,
+});
+
+// Define a route to handle the file upload
+router.route("/register").post(
+  upload.fields([
+    { name: 'post-images', maxCount: 5 },
+    { name: 'avatar', maxCount: 1 },
+    { name: 'coverImage', maxCount: 1 },
+  ]),
+  registerUser
+);
+
+// Define the registerUser function
+function registerUser(req, res) {
+  // Access the uploaded files information
+  const postImages = req.files['post-images'] || [];
+  const avatar = req.files['avatar'] ? req.files['avatar'][0] : null;
+  const coverImage = req.files['coverImage'] ? req.files['coverImage'][0] : null;
+
+  // Get local paths of the uploaded files
+  const postImagesPaths = postImages.map(file => path.join("./public/temp", file.originalname));
+  const avatarPath = avatar ? path.join("./public/temp", avatar.originalname) : null;
+  const coverImagePath = coverImage ? path.join("./public/temp", coverImage.originalname) : null;
+
+  // Now you can save `postImagesPaths`, `avatarPath`, and `coverImagePath` to MongoDB or perform other tasks
+  // ...
+
+  return res.status(200).json({ postImagesPaths, avatarPath, coverImagePath });
+}
+
+export default router;
