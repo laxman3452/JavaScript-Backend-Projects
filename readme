@@ -9,6 +9,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 process.env.PORT
 
+package.json
+"type":"module"
 
 npm i nodemon
 "scripts": {
